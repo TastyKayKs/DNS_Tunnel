@@ -1,0 +1,27 @@
+#Command for socat tunnel on windows 
+.\socat.exe tcp-listen:2222,fork,keepalive udp-connect:your-public-server:53
+
+#Command for socat tunnel on public unix server
+socat udp-listen:53,reuseaddr,fork tcp-connect:your-public-server:22,keepalive 2> /dev/null
+
+#PowerShell code to hold the session open (this is very janky)
+$wShell = New-Object -ComObject wscript.shell
+While($True)
+{
+	If(Test-path C:\temp\ded.txt)
+	{
+    #There must be another powershell window titled "SSHTunnel" for the to work
+		$wShell.AppActivate('SSHTunnel')
+		$wShell.SendKeys('{(}ssh -D 1337 -q -C -N root@127.0.0.1 -p 2222{)} -or {(}echo " " >> C:\temp\ded.txt{)}~')
+		
+		Sleep -Milliseconds 250
+
+		$wshell.AppActivate('SSHTunnel')
+		$wshell.SendKeys('password~')
+		
+		del C:\temp\ded.txt
+	}
+	Sleep -Milliseconds 50
+}
+
+#Create an empty text file called ded.txt in your C:\Temp folder to start it
