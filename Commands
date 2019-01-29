@@ -10,7 +10,7 @@ While($True)
 {
 	If(Test-path C:\temp\ded.txt)
 	{
-    #There must be another powershell window titled "SSHTunnel" for the to work
+    		#There must be another powershell window titled "SSHTunnel" for the to work
 		$wShell.AppActivate('SSHTunnel')
 		$wShell.SendKeys('{(}ssh -D 1337 -q -C -N root@127.0.0.1 -p 2222{)} -or {(}echo " " >> C:\temp\ded.txt{)}~')
 		
